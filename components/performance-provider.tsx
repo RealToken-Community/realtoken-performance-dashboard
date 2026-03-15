@@ -35,33 +35,23 @@ export function PerformanceProvider({
   const [status, setStatus] = useState<PerformanceStatus>("idle")
   const [error, setError] = useState<string | null>(null)
 
-  const startFetch = useCallback(
-    (walletAddress: string) => {
-      if (
-        walletAddress === address &&
-        (status === "loading" || status === "success")
-      ) {
-        return
-      }
+  const startFetch = useCallback((walletAddress: string) => {
+    setAddress(walletAddress)
+    setStatus("loading")
+    setError(null)
 
-      setAddress(walletAddress)
-      setStatus("loading")
-      setError(null)
-
-      getPerformance(walletAddress)
-        .then((result) => {
-          setData(result)
-          setStatus("success")
-        })
-        .catch((err: unknown) => {
-          setError(
-            err instanceof Error ? err.message : "Failed to load performance"
-          )
-          setStatus("error")
-        })
-    },
-    [address, status]
-  )
+    getPerformance(walletAddress)
+      .then((result) => {
+        setData(result)
+        setStatus("success")
+      })
+      .catch((err: unknown) => {
+        setError(
+          err instanceof Error ? err.message : "Failed to load performance"
+        )
+        setStatus("error")
+      })
+  }, [])
 
   const reset = useCallback(() => {
     setAddress(null)

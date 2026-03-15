@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import { usePerformance } from "@/components/performance-provider"
 
@@ -18,6 +18,7 @@ interface LoadingScreenProps {
 export function LoadingScreen({ address, onComplete }: LoadingScreenProps) {
   const [step, setStep] = useState(0)
   const { status, startFetch } = usePerformance()
+  const hasSeenLoading = useRef(false)
 
   useEffect(() => {
     const interval = setInterval(
@@ -33,7 +34,13 @@ export function LoadingScreen({ address, onComplete }: LoadingScreenProps) {
   }, [address, startFetch])
 
   useEffect(() => {
-    if (status === "success" || status === "error") {
+    if (status === "loading") {
+      hasSeenLoading.current = true
+    }
+  }, [status])
+
+  useEffect(() => {
+    if ((status === "success" || status === "error") && hasSeenLoading.current) {
       onComplete()
     }
   }, [status, onComplete])
