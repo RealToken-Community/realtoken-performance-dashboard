@@ -50,16 +50,21 @@ function PageContent() {
     setState({ phase: "entry" })
   }, [])
 
+  const handleLoadingError = useCallback(() => {
+    setState({ phase: "entry" })
+  }, [])
+
   return (
     <>
       {state.phase === "entry" && <WalletEntry onSubmit={handleSubmit} />}
-      {state.phase === "loading" && (
-        <LoadingScreen
-          address={state.address}
-          disableCache={state.disableCache}
-          onComplete={handleLoadingComplete}
-        />
-      )}
+{state.phase === "loading" && (
+          <LoadingScreen
+            address={state.address}
+            disableCache={state.disableCache}
+            onComplete={handleLoadingComplete}
+            onError={handleLoadingError}
+          />
+        )}
       {state.phase === "dashboard" && (
         <Dashboard
           onRefresh={handleRefresh}
