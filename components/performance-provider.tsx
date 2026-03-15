@@ -17,7 +17,7 @@ interface PerformanceContextValue {
   data: PerformanceData | null
   status: PerformanceStatus
   error: string | null
-  startFetch: (address: string) => void
+  startFetch: (address: string, disableCache?: boolean) => void
   reset: () => void
 }
 
@@ -35,12 +35,12 @@ export function PerformanceProvider({
   const [status, setStatus] = useState<PerformanceStatus>("idle")
   const [error, setError] = useState<string | null>(null)
 
-  const startFetch = useCallback((walletAddress: string) => {
+  const startFetch = useCallback((walletAddress: string, disableCache?: boolean) => {
     setAddress(walletAddress)
     setStatus("loading")
     setError(null)
 
-    getPerformance(walletAddress)
+    getPerformance(walletAddress, disableCache)
       .then((result) => {
         setData(result)
         setStatus("success")

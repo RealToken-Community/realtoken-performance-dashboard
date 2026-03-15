@@ -57,16 +57,22 @@ export interface PerformanceData {
 }
 
 export async function getPerformance(
-  walletAddress: string
+  walletAddress: string,
+  disableCache?: boolean
 ): Promise<PerformanceData> {
-
   const baseUrl = process.env.NEXT_PUBLIC_API_PORT
     ? `${window.location.protocol}//${window.location.hostname}:${process.env.NEXT_PUBLIC_API_PORT}`
     : window.location.origin
 
-  const url = `${baseUrl}/api/v1/realtokens-performance?wallet=${encodeURIComponent(
-    walletAddress
-  )}`
+  const params = new URLSearchParams({
+    wallet: walletAddress,
+  })
+
+  if (disableCache) {
+    params.set("no_cache", "true")
+  }
+
+  const url = `${baseUrl}/api/v1/realtokens-performance?${params.toString()}`
 
   const response = await fetch(url)
 

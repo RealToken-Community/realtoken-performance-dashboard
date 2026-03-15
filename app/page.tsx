@@ -9,14 +9,14 @@ import { PerformanceProvider } from "@/components/performance-provider"
 
 type AppState =
   | { phase: "entry" }
-  | { phase: "loading"; address: string }
+  | { phase: "loading"; address: string; disableCache?: boolean }
   | { phase: "dashboard"; address: string }
 
 export default function Page() {
   const [state, setState] = useState<AppState>({ phase: "entry" })
 
   const handleSubmit = useCallback((address: string) => {
-    setState({ phase: "loading", address })
+    setState({ phase: "loading", address, disableCache: false })
   }, [])
 
   const handleLoadingComplete = useCallback(() => {
@@ -27,7 +27,7 @@ export default function Page() {
 
   const handleRefresh = useCallback(() => {
     if (state.phase === "dashboard") {
-      setState({ phase: "loading", address: state.address })
+      setState({ phase: "loading", address: state.address, disableCache: true })
     }
   }, [state])
 
@@ -42,6 +42,7 @@ export default function Page() {
         {state.phase === "loading" && (
           <LoadingScreen
             address={state.address}
+            disableCache={state.disableCache}
             onComplete={handleLoadingComplete}
           />
         )}

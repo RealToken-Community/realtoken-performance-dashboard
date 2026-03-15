@@ -12,10 +12,11 @@ const STEPS = [
 
 interface LoadingScreenProps {
   address: string
+  disableCache?: boolean
   onComplete: () => void
 }
 
-export function LoadingScreen({ address, onComplete }: LoadingScreenProps) {
+export function LoadingScreen({ address, disableCache, onComplete }: LoadingScreenProps) {
   const [step, setStep] = useState(0)
   const { status, startFetch } = usePerformance()
   const hasSeenLoading = useRef(false)
@@ -30,8 +31,8 @@ export function LoadingScreen({ address, onComplete }: LoadingScreenProps) {
   }, [])
 
   useEffect(() => {
-    startFetch(address)
-  }, [address, startFetch])
+    startFetch(address, disableCache)
+  }, [address, disableCache, startFetch])
 
   useEffect(() => {
     if (status === "loading") {
