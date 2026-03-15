@@ -14,9 +14,10 @@ interface LoadingScreenProps {
   address: string
   disableCache?: boolean
   onComplete: () => void
+  onError: () => void
 }
 
-export function LoadingScreen({ address, disableCache, onComplete }: LoadingScreenProps) {
+export function LoadingScreen({ address, disableCache, onComplete, onError }: LoadingScreenProps) {
   const [step, setStep] = useState(0)
   const { status, startFetch } = usePerformance()
   const hasSeenLoading = useRef(false)
@@ -41,10 +42,12 @@ export function LoadingScreen({ address, disableCache, onComplete }: LoadingScre
   }, [status])
 
   useEffect(() => {
-    if ((status === "success" || status === "error") && hasSeenLoading.current) {
+    if (status === "success" && hasSeenLoading.current) {
       onComplete()
+    } else if (status === "error" && hasSeenLoading.current) {
+      onError()
     }
-  }, [status, onComplete])
+  }, [status, onComplete, onError])
 
   function truncate(addr: string) {
     return `${addr.slice(0, 6)}...${addr.slice(-4)}`
