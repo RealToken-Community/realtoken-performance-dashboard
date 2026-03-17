@@ -11,19 +11,19 @@ const FEATURES = [
     icon: TrendingUp,
     title: "Realized & Unrealized Gains",
     description:
-      "Track your closed and open positions using Weighted Average Cost methodology.",
+      "Monitor your open and closed positions, with realized and unrealized gains calculated using the Weighted Average Cost (WAC) method.",
   },
   {
     icon: PieChart,
-    title: "Income & Distributions",
+    title: "Distributed income",
     description:
-      "Monitor all received dividends and interest payments across your portfolio.",
+      "Monitor all received rents, income and interest payments across your portfolio.",
   },
   {
     icon: BarChart3,
-    title: "Annualized Returns (IRR)",
+    title: "Portfolio Performance Metrics",
     description:
-      "Get accurate annualized performance metrics using Internal Rate of Return.",
+      "Get a complete view of your portfolio performance with total ROI over the full period and annualized returns (IRR) for annualized performance.",
   },
 ]
 
@@ -51,7 +51,7 @@ export function WalletEntry({ onSubmit }: WalletEntryProps) {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-background px-6 py-16">
-      <div className="flex w-full max-w-2xl flex-col items-center">
+      <div className="flex w-full max-w-3xl flex-col items-center">
         {/* Logo + Title */}
         <div className="mb-10 flex flex-col items-center gap-4">
           <Image
@@ -63,9 +63,9 @@ export function WalletEntry({ onSubmit }: WalletEntryProps) {
           <h1 className="text-center text-2xl font-bold tracking-tight text-foreground sm:text-3xl text-balance">
             Realtoken Performance Dashboard
           </h1>
-          <p className="max-w-md text-center text-sm leading-relaxed text-muted-foreground">
+          <p className="max-w-lg text-center text-sm leading-relaxed text-muted-foreground">
             Enter your wallet address to analyze your RealToken portfolio
-            performance across all linked wallets.
+            performance.
           </p>
         </div>
 
