@@ -254,7 +254,7 @@ export function Dashboard({ onRefresh, onSwitchWallet }: DashboardProps) {
             secondaryLines={[
               {
                 type: "percent",
-                value: 0.0,
+                value: performanceData?.overall_performance.irr_pct as number,
                 label: "Annualized return (IRR)",
               },
             ]}
