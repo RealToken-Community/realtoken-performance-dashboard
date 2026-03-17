@@ -209,9 +209,18 @@ export function Dashboard({ onRefresh, onSwitchWallet }: DashboardProps) {
             percentValue={performanceData?.realized.return_pct as number}
             percentSuffix="total return"
             footer="From completed sales"
-            tooltipText="Gains from positions that have been closed: Calculated using the Weighted Average Cost (WAC) method. Each outbound movement is matched against a dynamically computed weighted acquisition price based on prior inbound movements. Aggregated results produce realized performance.
-            Total cost basis = the total amount you originally paid to acquire the tokens that were sold.
-            Total sales value = the total amount you received when selling those tokens."            
+            tooltipText={
+              <>
+                <strong>Realized gains from closed positions.</strong>
+                <br />
+                Calculated using the Weighted Average Cost (WAC) method, where each sale is matched against an average acquisition price based on prior purchases.
+                <br />
+                <br />
+                <strong>Total cost basis:</strong> what you originally paid for the sold tokens
+                <br />
+                <strong>Total sales value:</strong> what you received when selling them
+              </>
+            }          
             detailedInfo={[
               { type: "percent", value: performanceData?.realized.annualized_return_pct as number, label: "Annualized return" },
               { type: "text", value: performanceData?.realized.avg_holding_days as number, label: "Avg. holding period" },
@@ -225,7 +234,16 @@ export function Dashboard({ onRefresh, onSwitchWallet }: DashboardProps) {
             percentValue={performanceData?.unrealized.return_pct as number}
             percentSuffix="total return"
             footer="Based on current Realt price"
-            tooltipText="Gains from open positions at current Realt value: Calculated using the Weighted Average Cost (WAC) method. Remaining tokens retain a dynamically computed weighted acquisition price. Unrealized PnL compares this cost basis to current Realt valuation."
+            tooltipText={
+              <>
+                <strong>Unrealized gains from open positions.</strong>
+                <br />
+                Calculated using the Weighted Average Cost (WAC) method, where remaining tokens keep an average acquisition price based on prior purchases.
+                <br />
+                <br />
+                Unrealized PnL compares this cost basis to the current Realt valuation.
+              </>
+            }
             detailedInfo={[
               { type: "percent", value: performanceData?.unrealized.annualized_return_pct as number, label: "Annualized return" },
               { type: "text", value: performanceData?.unrealized.avg_holding_days as number, label: "Avg. holding period" },
@@ -240,7 +258,17 @@ export function Dashboard({ onRefresh, onSwitchWallet }: DashboardProps) {
             percentValue={performanceData?.distributed_income.annualized_return_pct as number}
             comingSoonText="Annualized return"
             footer="Total distributed income"
-            tooltipText="Dividends and interest payments received"
+            tooltipText={
+              <>
+                <strong>Distributed income</strong>
+                <br />
+                Includes all types of income such as rent, factoring, and interest payments.
+                <br />
+                <br />
+                Values are extracted from distributed CSV files provided by Realt.
+                This reflects income that has been effectively received, not theoretical or expected returns.
+              </>
+            }
           />
           <KpiTile
             title="Overall Performance"

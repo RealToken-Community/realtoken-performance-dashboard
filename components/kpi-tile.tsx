@@ -60,7 +60,8 @@ interface KpiTileProps {
   /** Suffix displayed after the percentage, e.g. "overall return" */
   percentSuffix?: string
   footer: string
-  tooltipText?: string
+  /** Tooltip content - supports React nodes for formatting (bold, line breaks, etc.) */
+  tooltipText?: React.ReactNode
   highlighted?: boolean
   /** If true, percentage is the primary display and gain is secondary */
   percentPrimary?: boolean
@@ -159,7 +160,7 @@ export function KpiTile({
               </button>
             </TooltipTrigger>
             <TooltipContent side="top" className="max-w-72">
-              <p className="leading-relaxed">{tooltipText}</p>
+              <div className="leading-relaxed">{tooltipText}</div>
             </TooltipContent>
           </Tooltip>
         )}

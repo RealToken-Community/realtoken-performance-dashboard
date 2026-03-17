@@ -62,7 +62,7 @@ export function TokenContextBar({
               <span className="font-medium text-foreground">
                 {selectedLabel}
               </span>
-              . KPIs and transactions are filtered to this token.
+              . Performance indicators and transactions are filtered to this token.
             </>
           ) : (
             "Showing global portfolio performance across all tokens. Select a token to view individual metrics."
