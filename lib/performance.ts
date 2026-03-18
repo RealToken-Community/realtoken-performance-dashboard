@@ -77,6 +77,9 @@ export async function getPerformance(
   const response = await fetch(url)
 
   if (!response.ok) {
+    if (response.status === 429) {
+      throw new Error("RATE_LIMITED")
+    }
     throw new Error(`Failed to fetch performance: ${response.statusText}`)
   }
 

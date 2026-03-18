@@ -21,11 +21,19 @@ function PageContent() {
   // Show error toast when fetch fails
   useEffect(() => {
     if (prevStatusRef.current === "loading" && status === "error" && error) {
-      toast({
-        variant: "destructive",
-        title: "Connection Error",
-        description: "Unable to fetch performance data. The server may be unavailable. Please try again later.",
-      })
+      if (error === "RATE_LIMITED") {
+        toast({
+          variant: "destructive",
+          title: "Too Many Requests",
+          description: "You have made too many requests. Please try again later.",
+        })
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Connection Error",
+          description: "Unable to fetch performance data. The server may be unavailable. Please try again later.",
+        })
+      }
     }
     prevStatusRef.current = status
   }, [status, error])
