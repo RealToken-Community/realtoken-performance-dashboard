@@ -646,10 +646,21 @@ export function TransactionTable({
           >
             Previous
           </Button>
-          <span>
-            {table.getState().pagination.pageIndex + 1} /{" "}
-            {table.getPageCount()}
-          </span>
+          <div className="flex items-center gap-1.5">
+            <Input
+              type="number"
+              min={1}
+              max={table.getPageCount()}
+              value={table.getState().pagination.pageIndex + 1}
+              onChange={(e) => {
+                const page = e.target.value ? Number(e.target.value) - 1 : 0
+                if (page >= 0 && page < table.getPageCount()) {
+                  table.setPageIndex(page)
+                }
+              }}
+              className="h-8 w-14 text-center bg-secondary/50 border-border text-sm [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus-visible:ring-0 focus-visible:border-border"            />
+            <span className="text-muted-foreground">/ {table.getPageCount()}</span>
+          </div>
           <Button
             variant="outline"
             size="sm"
