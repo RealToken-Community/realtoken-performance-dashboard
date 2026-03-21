@@ -3,7 +3,7 @@
 ## Important Dependency
 
 This project is **not standalone**.
-It is the **frontend dashboard layer** and strictly depends on the backend API: [realtoken-performance-api](https://github.com/RealToken-Community/realtoken-performance-api):
+It is the **frontend dashboard layer** and strictly depends on the backend API: [realtoken-performance-api](https://github.com/RealToken-Community/realtoken-performance-api)
 
 ---
 

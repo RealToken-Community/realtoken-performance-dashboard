@@ -1,0 +1,15 @@
+services:
+  realtoken-performance-dashboard:
+    image: ${DOCKER_REGISTRY}/realtoken-performance-dashboard:latest
+    container_name: ${DOCKER_BRANCH}-realtoken-performance-dashboard
+    networks:
+      - traefik-realt
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.realtoken-performance-dashboard-${DOCKER_BRANCH}.rule=Host(`${HOSTNAME}`) && PathPrefix(`/`)"
+      - "traefik.http.services.realtoken-performance-dashboard-${DOCKER_BRANCH}.loadbalancer.server.port=80"
+    restart: unless-stopped
+
+networks:
+  traefik-realt:
+    external: true

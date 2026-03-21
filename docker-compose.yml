@@ -1,0 +1,9 @@
+services:
+  realtoken-performance-dashboard:
+    build:
+      context: .
+      dockerfile: dockerfile
+    container_name: realtoken-performance-dashboard
+    ports:
+      - "3598:80"
+    restart: unless-stopped
