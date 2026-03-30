@@ -89,7 +89,7 @@ jobs:
             export DOCKER_REGISTRY="$DOCKER_REGISTRY"
             export HOSTNAME="$HOSTNAME"
                 
-            cd /var/docker/realtoken-performance-dashboard/\$DOCKER_BRANCH
+            cd /var/docker/performance/dashboard/\$DOCKER_BRANCH
             git pull origin \$DOCKER_BRANCH
         
             docker login -u "$DOCKER_LOGIN" -p "$DOCKER_PASSWD" $DOCKER_REGISTRY
