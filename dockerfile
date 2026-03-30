@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # Runtime stage
-FROM nginx:latest
+FROM nginx:alpine
 
 # Copy the static export to the nginx web root
 COPY --from=builder /app/out /usr/share/nginx/html

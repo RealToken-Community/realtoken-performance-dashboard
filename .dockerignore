@@ -1,0 +1,36 @@
+# Dependencies
+node_modules
+npm-debug.log
+yarn-error.log
+pnpm-lock.yaml
+
+# Build outputs
+.next
+dist
+out
+build
+
+# Local env files
+.env
+.env.development
+!.env.example
+
+# Git
+.git
+.gitignore
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode
+.idea
+
+# Logs
+logs
+*.log
+
+# Tests / coverage
+coverage
+
+# Misc
+*.local
