@@ -44,7 +44,7 @@ jobs:
           context: .
           file: dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_REGISTRY }}/realtoken-performance-dashboard:ui
+          tags: ${{ secrets.DOCKER_REGISTRY }}/realtoken-performance-dashboard:latest
 
       - name: Configure SSH
         run: |
