@@ -10,6 +10,7 @@ import { BreakdownBar } from "@/components/breakdown-bar"
 import { WalletMenu } from "@/components/wallet-menu"
 import { TransactionTable, exportTransactionsCsv } from "@/components/transaction-table"
 import { TokenContextBar } from "@/components/token-context-bar"
+import { Math } from "@/components/ui/math"
 import { buildEventsFromResponse, type Transaction } from "@/lib/data"
 import { useTokens } from "@/components/tokens-provider"
 import { usePerformance } from "@/components/performance-provider"
@@ -134,13 +135,13 @@ export function Dashboard({ onRefresh, onSwitchWallet }: DashboardProps) {
   const breakdownSegments = useMemo(() => {
     const realized =
       Number(performanceData?.realized.realized_pnl ?? 0)
-  
+
     const unrealized =
       Number(performanceData?.unrealized.unrealized_pnl ?? 0)
-  
+
     const income =
       Number(performanceData?.distributed_income.total_revenues_distributed ?? 0)
-  
+
     return [
       { label: "Realized", value: realized, color: "#5B8DEF" },
       { label: "Unrealized", value: unrealized, color: "#D4915E" },
@@ -151,7 +152,7 @@ export function Dashboard({ onRefresh, onSwitchWallet }: DashboardProps) {
     performanceData?.unrealized?.unrealized_pnl,
     performanceData?.distributed_income?.total_revenues_distributed,
   ])
-  
+
   return (
     <main className="flex min-h-screen items-start justify-center bg-background px-6 pt-6 pb-16">
       <section className="w-full max-w-[1600px]">
@@ -220,7 +221,7 @@ export function Dashboard({ onRefresh, onSwitchWallet }: DashboardProps) {
                 <br />
                 <strong>Total sales value:</strong> what you received when selling them
               </>
-            }          
+            }
             detailedInfo={[
               { type: "percent", value: performanceData?.realized.annualized_return_pct as number, label: "Annualized return" },
               { type: "text", value: performanceData?.realized.avg_holding_days as number, label: "Avg. holding period" },
@@ -284,6 +285,30 @@ export function Dashboard({ onRefresh, onSwitchWallet }: DashboardProps) {
                 type: "percent",
                 value: performanceData?.overall_performance.irr_pct as number,
                 label: "Annualized return (IRR)",
+                attentionTooltip: (
+                  <>
+                    <strong>How to interpret this negative IRR</strong>
+                    <br /><br />
+                    A negative IRR does <strong>not necessarily mean you are losing money each year</strong>.
+                    In some cases, it may not have a clear economic interpretation and should be read with caution.
+                    <br /><br />
+                    <strong>Why?</strong>
+                    <br />
+                    The IRR (Internal Rate of Return) is the annual rate <strong>r</strong> that satisfies:
+                    <br /><br />
+                    <Math display>{"\\sum_{t} \\frac{CF_t}{(1+r)^t} = 0"}</Math>
+                    <br /><br />
+                    It assumes all your cash flows can be explained by a <strong>single constant annual return</strong>.
+                    <br /><br />
+                    In this case, <strong>no positive rate</strong> can satisfy this equation given the timing of your investments and returns, only a negative one does.
+                    This typically happens when capital is invested at different times and does not generate enough return relative to when it was deployed.
+                    <br /><br />
+                    <strong>Key takeaway:</strong>
+                    <br />
+                    You may still have a <strong>positive overall gain</strong>, but your capital was <strong>not efficiently deployed over time</strong>.
+                    The negative IRR reflects <strong>timing inefficiencies</strong>, not an actual annual loss.
+                  </>
+                ),
               },
             ]}
           >

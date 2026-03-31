@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Info } from "lucide-react"
+import { Info, AlertTriangle } from "lucide-react"
 import { cn } from "@/lib/utils"
 import {
   Tooltip,
@@ -47,6 +47,8 @@ interface SecondaryLine {
   label?: string
   value: number
   type: "percent" | "gain"
+  /** Tooltip content shown with an attention icon when value is negative */
+  attentionTooltip?: React.ReactNode
 }
 
 /* ---------- Main tile props ---------- */
@@ -186,9 +188,25 @@ export function KpiTile({
                   ? "text-emerald-400"
                   : "text-red-400"
                 : "text-foreground"
+            const showAttention = line.attentionTooltip && line.value < 0
             return (
               <div key={i} className="flex items-center gap-1.5 text-sm">
                 <span className={cn("font-medium", color)}>{val}</span>
+                {showAttention && (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button
+                        className="text-amber-500 transition-colors hover:text-amber-400"
+                        aria-label="Attention: negative IRR"
+                      >
+                        <AlertTriangle className="h-3.5 w-3.5" />
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent side="top" className="max-w-80">
+                      <div className="leading-relaxed">{line.attentionTooltip}</div>
+                    </TooltipContent>
+                  </Tooltip>
+                )}
                 {line.label && (
                   <span className="text-muted-foreground">{line.label}</span>
                 )}
@@ -215,9 +233,25 @@ export function KpiTile({
                   ? "text-emerald-400"
                   : "text-red-400"
                 : "text-foreground"
+            const showAttention = line.attentionTooltip && line.value < 0
             return (
               <div key={i} className="flex items-center gap-1.5 text-sm">
                 <span className={cn("font-medium", color)}>{val}</span>
+                {showAttention && (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button
+                        className="text-amber-500 transition-colors hover:text-amber-400"
+                        aria-label="Attention: negative value"
+                      >
+                        <AlertTriangle className="h-3.5 w-3.5" />
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent side="top" className="max-w-80">
+                      <div className="leading-relaxed">{line.attentionTooltip}</div>
+                    </TooltipContent>
+                  </Tooltip>
+                )}
                 {line.label && (
                   <span className="text-muted-foreground">{line.label}</span>
                 )}
