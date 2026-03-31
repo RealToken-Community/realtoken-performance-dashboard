@@ -27,6 +27,13 @@ function PageContent() {
           title: "Too Many Requests",
           description: "You have made too many requests. Please try again later.",
         })
+      } else if (error.startsWith("API_ERROR:")) {
+        const apiMessage = error.replace("API_ERROR:", "")
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: apiMessage,
+        })
       } else {
         toast({
           variant: "destructive",

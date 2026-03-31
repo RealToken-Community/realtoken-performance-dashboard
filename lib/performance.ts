@@ -80,6 +80,18 @@ export async function getPerformance(
     if (response.status === 429) {
       throw new Error("RATE_LIMITED")
     }
+    if (response.status === 422) {
+      try {
+        const errorData = await response.json() as { error?: { message?: string } }
+        const message = errorData?.error?.message || "Unprocessable request"
+        throw new Error(`API_ERROR:${message}`)
+      } catch (e) {
+        if (e instanceof Error && e.message.startsWith("API_ERROR:")) {
+          throw e
+        }
+        throw new Error("API_ERROR:Unprocessable request")
+      }
+    }
     throw new Error(`Failed to fetch performance: ${response.statusText}`)
   }
 
